@@ -60,6 +60,7 @@
     import { ref, useTemplateRef } from 'vue';
     import { useTheme } from 'vuetify';
     import { request } from '@/composables/request';
+    import { useRouter } from 'vue-router';
 
 
     const theme= useTheme()
@@ -70,6 +71,7 @@
     const timeout= ref(2000)
     const password= ref("")
     const formRef= ref(null)
+    const router= useRouter()
     const usernameRef= useTemplateRef("usernameRef")
     const passwordRef= useTemplateRef("passwordRef")
 
@@ -102,8 +104,9 @@
             request("post","login",{
                 name: username.value,
                 password: password.value
-            }, false).then((res) => {
-                console.log(res)
+            }, false).then((res) => { 
+                localStorage.setItem("toto",res.data.token)
+                router.push({name: "appHome"})
             }).catch((err) => {
                 message.value= err.response.data.error
                 snackbar.value= true
