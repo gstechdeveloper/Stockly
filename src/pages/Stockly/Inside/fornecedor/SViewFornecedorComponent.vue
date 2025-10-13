@@ -56,6 +56,16 @@
                     </v-expansion-panel>
                 </v-expansion-panels>
             </v-col>
+            <v-col cols="4">
+                {{ "Página " + currentinfoPage + " de " + infoLastPage }}
+            </v-col>
+            <v-col cols="2" md="4" lg="6"></v-col>
+            <v-col cols="3" md="2" lg="1">
+                <v-btn variant="outlined" color="primary" @click="search(anterior)" :disabled="anterior == null ? true : false" class="w-100">Anterior</v-btn>
+            </v-col>
+            <v-col cols="3" md="2" lg="1">
+                <v-btn variant="outlined" color="primary" @click="search(prox)" :disabled="prox == null ? true : false" class="w-100">Próximo</v-btn>
+            </v-col>
         </v-row>
     </v-container>
 
@@ -153,6 +163,11 @@
     import { onMounted, ref, useTemplateRef } from 'vue';
     import { useRouter } from 'vue-router'
 
+    const currentinfoPage= ref("")
+    const infoLastPage= ref("")
+    const anterior= ref("")
+    const prox= ref("")
+
     const fornecedorNameRef= useTemplateRef("fornecedorNameRef")
     const dialog= ref(false)
     const router= useRouter()
@@ -182,6 +197,16 @@
         v => (v && v.length >= 3) || "O nome do fornecedor deve ter no mínimo 3 caracteres"
     ]  
 
+    const search= (url) => {
+        request("get",url,{},true,false).then((res) => {
+            items.value= res.data.data
+            currentinfoPage.value= res.data.current_page
+            infoLastPage.value= res.data.last_page
+            anterior.value= res.data.prev_page_url
+            prox.value= res.data.next_page_url
+        })
+    }
+
     const update= () => {
         if(fornecedorNameRef.value.errorMessages.length == 0){
             request("put","fornecedor/update",{ 
@@ -208,8 +233,6 @@
     }
 
     const editFornecedor= (nome) => {
-        router.push("/stockly/app/fornecedor/editar/" + nome)
-        console.log(nome)
         dialog.value= true
         request("post","fornecedor/select",{ "nome": nome}).then((res) => {
             currentNome.value= res.data[0].nome
@@ -226,6 +249,10 @@
     onMounted(() => {
         request("get","fornecedor/list",{}).then((res) => {
             items.value= res.data.data
+            currentinfoPage.value= res.data.current_page
+            infoLastPage.value= res.data.last_page
+            anterior.value= res.data.prev_page_url
+            prox.value= res.data.next_page_url
         })
     })
 </script>

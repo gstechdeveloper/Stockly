@@ -1,5 +1,4 @@
 import RootComponent from "@/pages/App/RootComponent.vue";
-import SEditFornecedorComponent from "@/pages/Stockly/Inside/fornecedor/SEditFornecedorComponent.vue";
 import SFornecedorComponent from "@/pages/Stockly/Inside/fornecedor/SFornecedorComponent.vue";
 import SHomeComponent from "@/pages/Stockly/Inside/SHomeComponent.vue";
 import SRootComponent from "@/pages/Stockly/Inside/SRootComponent.vue";
@@ -26,13 +25,7 @@ export const routes = [
       {
         path: "fornecedor",
         name: "homeFornecedor",
-        component: SFornecedorComponent,
-        children: [
-          {
-            path: "editar/:nome",
-            component: SEditFornecedorComponent
-          }
-        ]
+        component: SFornecedorComponent
       }
     ]
   }
