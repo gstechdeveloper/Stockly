@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('fornecedors', function (Blueprint $table) {
+        Schema::create('materials', function (Blueprint $table) {
             $table->id();
             $table->string("nome");
-            $table->string("endereco")->nullable();
-            $table->string("cnpj")->nullable();
-            $table->string("inscricao")->nullable();
-            $table->string("tipofornecedor")->nullable();
-            $table->string("telefone")->nullable();
-            $table->string("situacao")->nullable();
+            $table->string("descricao")->nullable();
+            $table->integer("quantidade")->default(0);
+            $table->string("unidade_medida");
+            $table->integer("estoque_minimo");
+            $table->string("localizacao")->nullable();
+            $table->boolean("status")->default(true);
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('fornecedors');
+        Schema::dropIfExists('materials');
     }
 };
