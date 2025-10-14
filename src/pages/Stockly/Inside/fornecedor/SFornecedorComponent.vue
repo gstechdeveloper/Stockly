@@ -12,11 +12,11 @@
             <v-card-text style="border-bottom: 0; border-bottom-color: transparent;">
                 <v-tabs-window v-model="tab">
                     <v-tabs-window-item value="one">
-                        <SAddFornecedorComponent></SAddFornecedorComponent>
+                        <SAddFornecedorComponent @fornecedor-adicionado="atualizarLista"></SAddFornecedorComponent>
                     </v-tabs-window-item>
 
                     <v-tabs-window-item value="two">
-                        <SViewFornecedorComponent></SViewFornecedorComponent>
+                        <SViewFornecedorComponent ref="listagem"></SViewFornecedorComponent>
                     </v-tabs-window-item>
                 </v-tabs-window>
             </v-card-text>
@@ -28,9 +28,12 @@
     import { ref } from 'vue';
     import SAddFornecedorComponent from './SAddFornecedorComponent.vue';
     import SViewFornecedorComponent from './SViewFornecedorComponent.vue';
-
+    const listagem= ref(null)
     const tab= ref(null)
 
+    const atualizarLista= () => {
+        listagem.value?.firstLoad()
+    }
 </script>
 
 <style scoped>

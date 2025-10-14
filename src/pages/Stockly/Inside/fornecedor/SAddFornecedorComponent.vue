@@ -3,7 +3,7 @@
     <v-container fluid>
         <v-row>
             <v-col>
-                <h1>Adicionar</h1>
+                <h1>Adicionar Fornecedor</h1>
             </v-col>
         </v-row>
         <v-row>
@@ -66,6 +66,7 @@
     import { ref, useTemplateRef } from 'vue'
     import { request } from '@/composables/request'
     const FornecedorNameRef= useTemplateRef("FornecedorNameRef")
+    const emit = defineEmits(["fornecedor-adicionado"])
     const fornecedor= ref("")
     const endereco= ref("")
     const cnpj= ref("")
@@ -115,7 +116,8 @@
                 telefone.value= ""
                 situacao.value= ""
             }).catch((err) => {
-                errorFornecedor.value= err.response.data.errors.nome
+                console.log(err)
+                //errorFornecedor.value= err.response.data.errors.nome
             })
         }else{
             errorFornecedor.value= FornecedorNameRef.value.errorMessages[0]
