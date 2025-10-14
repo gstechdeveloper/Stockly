@@ -1,5 +1,6 @@
 import RootComponent from "@/pages/App/RootComponent.vue";
 import SFornecedorComponent from "@/pages/Stockly/Inside/fornecedor/SFornecedorComponent.vue";
+import SMaterialComponent from "@/pages/Stockly/Inside/material/SMaterialComponent.vue";
 import SHomeComponent from "@/pages/Stockly/Inside/SHomeComponent.vue";
 import SRootComponent from "@/pages/Stockly/Inside/SRootComponent.vue";
 import SLoginComponent from "@/pages/Stockly/SLoginComponent.vue";
@@ -26,6 +27,11 @@ export const routes = [
         path: "fornecedor",
         name: "homeFornecedor",
         component: SFornecedorComponent
+      },
+      {
+        path: "material",
+        name: "homeMaterial",
+        component: SMaterialComponent
       }
     ]
   }

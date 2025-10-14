@@ -2,7 +2,7 @@
     <v-container fluid>
         <v-row>
             <v-col>
-                <h1>Listar Fornecedores</h1>
+                <h1>Listar</h1>
             </v-col>
         </v-row>
 
@@ -12,30 +12,31 @@
                     <v-expansion-panel >
                         <v-expansion-panel-title class="text-h6">
                             <v-avatar color="primary" class="mr-5">
-                                <v-icon icon="mdi-account-tie"></v-icon>
+                                <v-icon icon="mdi-test-tube"></v-icon>
                             </v-avatar> 
-                            {{ items[item].nome }}
+                            {{ items[item].nome + " - " + items[item].quantidade + " unidades" }}
+                            <v-icon icon="mdi-alert" class="ml-1" color="warning" v-show="items[item].quantidade <= items[item].estoque_minimo"></v-icon>
                         </v-expansion-panel-title>
                         <v-expansion-panel-text>
                             <v-container fluid>
                                 <v-row>
-                                    <v-col cols="6">
-                                        <b>Nome do Fornecedor:</b> {{ items[item].nome }}
+                                    <v-col cols="12">
+                                        <b>Nome do Material:</b> {{ items[item].nome }}
+                                    </v-col>
+                                    <v-col cols="12">
+                                        <b>Descrição:</b> {{ items[item].descricao || "Não informado" }}
                                     </v-col>
                                     <v-col cols="6">
-                                        <b>Endereço:</b> {{ items[item].endereco || "Não informado" }}
+                                        <b>Estoque mínimo:</b> {{ items[item].estoque_minimo || "Não informado" }}
                                     </v-col>
                                     <v-col cols="6">
-                                        <b>CNPJ:</b> {{ items[item].cnpj || "Não informado" }}
+                                        <b>Quantidade atual:</b> {{ items[item].quantidade }}
                                     </v-col>
                                     <v-col cols="6">
-                                        <b>Inscrição:</b> {{ items[item].inscricao || "Não informado" }}
+                                        <b>Unidade:</b> {{ items[item].unidade_medida || "Não informado" }}
                                     </v-col>
                                     <v-col cols="6">
-                                        <b>Tipo de Fornecedor:</b> {{ items[item].tipofornecedor || "Não informado" }}
-                                    </v-col>
-                                    <v-col cols="6">
-                                        <b>Telefone:</b> {{ items[item].telefone || "Não informado" }}
+                                        <b>Status:</b> {{ items[item].status? "Ativo" : "Inativo" }}
                                     </v-col>
                                     <v-col cols="6">
                                         <b>Situação:</b> {{ items[item].situacao || "Não informado" }}
@@ -75,7 +76,7 @@
     >
       <v-card
         prepend-icon="mdi-account-edit"
-        title="Editar fornecedor"
+        title="Editar usuário"
       >
         <v-card-text>
             <v-container>
@@ -163,7 +164,6 @@
     import { onMounted, ref, useTemplateRef } from 'vue';
     import { useRouter } from 'vue-router'
 
-
     const currentinfoPage= ref("")
     const infoLastPage= ref("")
     const anterior= ref("")
@@ -247,20 +247,16 @@
         })
     }
 
-    const firstLoad= () => {
-        request("get","fornecedor/list",{}).then((res) => {
+    onMounted(() => {
+        request("get","material/list",{}).then((res) => {
             items.value= res.data.data
+            console.log(res.data.data)
             currentinfoPage.value= res.data.current_page
             infoLastPage.value= res.data.last_page
             anterior.value= res.data.prev_page_url
             prox.value= res.data.next_page_url
         })
-    }
-
-    onMounted(() => {
-        firstLoad()
     })
-
 </script>
 
 <style scoped>

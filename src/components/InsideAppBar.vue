@@ -3,8 +3,8 @@
             <v-list-item title="Stockly" subtitle="Aplicativo de Estoque">
             </v-list-item>
             <v-divider></v-divider>
-            <v-list-item link title="Fornecedor" @click="router.push('/stockly/app/fornecedor')" :class="link"></v-list-item>
-            <v-list-item link title="List Item 2"></v-list-item>
+            <v-list-item link title="Fornecedor" @click="router.push('/stockly/app/fornecedor')" :class="linkfornecedor"></v-list-item>
+            <v-list-item link title="Material" @click="router.push('/stockly/app/material')" :class="linkmaterial"></v-list-item>
             <v-list-item link title="List Item 3"></v-list-item>
         </v-navigation-drawer>
 
@@ -26,13 +26,20 @@
     import { useRouter } from 'vue-router';
     
     const router= useRouter()
-    const link = computed(() => {
-        let classes= ""
+    const linkfornecedor = computed(() => {
         if(router.currentRoute.value.name == "homeFornecedor"){
-            classes += "link"
+            return "link"
+        }else{
+            return ""
         }
+    })
 
-        return classes
+    const linkmaterial = computed(() => {
+        if(router.currentRoute.value.name == "homeMaterial"){
+            return "link"
+        }else{
+            return ""
+        }
     })
 
     
