@@ -32,16 +32,18 @@ class FornecedorController extends Controller
     }
 
     public function update(Request $request){
+
+        $fornecedor= Fornecedor::where("nome","=",$request->currentNome)->firstorFail();
+
         $validated= $request->validate([
-            "updatedNome" => "string|required|unique:fornecedors,nome"
+            "updatedNome" => "string|required|unique:fornecedors,nome," . $fornecedor->id
 
         ], [
             "updatedNome.required" => "O nome do fornecedor é obrigatório!",
             "updatedNome.unique" => "Nome do fornecedor já existe!"
         ]);
 
-        $fornecedor= Fornecedor::where("nome","=",$request->currentNome);
-
+        
         $updated= $fornecedor->update([
             "nome" => $request->updatedNome,
             "endereco" => $request->endereco,
